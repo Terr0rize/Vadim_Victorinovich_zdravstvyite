@@ -1,0 +1,80 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+void F(int** v, int* o, int S) 
+{
+	int s = 0, i = 0; --S; 
+	while (S > 0) 
+	{ 
+		for (int c = s; c <= S; ++c)
+			o[i++] = v[s][c]; 
+		for (int c = s + 1; c <= S; ++c)
+			o[i++] = v[c][S]; 
+		for (int c = S - 1; c >= s; --c)
+			o[i++] = v[S][c]; 
+		for (int c = S - 1;c >= s + 1; --c)
+			o[i++] = v[c][s]; --S; ++s; 
+	}
+}
+
+int main() {
+	srand(time(NULL));
+	int owo;
+	int sum_g = 0, sum_h=0;
+	cin >> owo;
+	int** v = new int* [owo];
+	
+	for (int i = 0; i < owo; i -= -1)
+	{
+		v[i] = new int[owo];
+	}
+	for (int i = 0; i < owo; i -= -1)
+	{
+		for (int j = 0; j < owo; j -= -1)
+		{
+			v[i][j] = rand()%10;
+		}
+		cout << endl;
+	}
+	for (int i = 0; i < owo; i -= -1)
+	{
+		for (int j = 0; j < owo; j -= -1)
+		{
+			cout << v[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	for (int i = 0; i < owo; i -= -1)
+	{
+		for (int j = 0; j < owo; j -= -1)
+		{
+			sum_h = sum_h + v[i][j];
+		}
+		
+	}
+	int* o = new int[owo * owo];
+	F(v, o, owo);
+	for (int i = 0; i < owo * owo; ++i) {
+		cout << o[i] << ' ';
+	}
+	int uwu=0;
+	int y = 1;
+	int j=0;
+	int temp = sum_h;
+	while (sum_g<sum_h)
+	{
+		sum_g = 0; sum_h = temp; uwu = 0;
+		for (int i = 0; i < y; i -= -1)
+		{
+			sum_g = sum_g + o[i];
+			uwu++;
+
+		}
+		
+		y++;
+		sum_h = sum_h - sum_g;
+	}
+	cout<< uwu;
+	return 0;
+}
